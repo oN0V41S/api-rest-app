@@ -8,18 +8,27 @@ var __decorate = (this && this.__decorate) || function (decorators, target, key,
 Object.defineProperty(exports, "__esModule", { value: true });
 exports.AppModule = void 0;
 const common_1 = require("@nestjs/common");
-const app_controller_1 = require("./controller/app.controller");
-const user_controller_1 = require("./controller/user.controller");
-const app_service_1 = require("./service/app.service");
-const user_service_1 = require("./service/user.service");
+const app_controller_1 = require("./app.controller");
+const app_service_1 = require("./app.service");
+const projects_module_1 = require("./projects/projects.module");
+const typeorm_1 = require("@nestjs/typeorm");
+const project_entity_1 = require("./projects/entities/project.entity");
 let AppModule = class AppModule {
 };
 exports.AppModule = AppModule;
 exports.AppModule = AppModule = __decorate([
     (0, common_1.Module)({
-        imports: [],
-        controllers: [app_controller_1.AppController, user_controller_1.UserController],
-        providers: [app_service_1.AppService, user_service_1.UserService],
+        imports: [
+            typeorm_1.TypeOrmModule.forRoot({
+                type: 'sqlite',
+                database: ':memory:',
+                entities: [project_entity_1.Project],
+                synchronize: true
+            }),
+            projects_module_1.ProjectsModule,
+        ],
+        controllers: [app_controller_1.AppController,],
+        providers: [app_service_1.AppService,],
     })
 ], AppModule);
 //# sourceMappingURL=app.module.js.map
